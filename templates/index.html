@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h1>Asteroids</h1>
+<p>A place to see near earth asteroids</p>
+
+<form action="/" method="GET">
+    <input type="submit" value="getAsteroid" name="getAsteroid" class="btn btn-primary"/>
+
+</form>
+
+{% endblock %}
