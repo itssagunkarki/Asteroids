@@ -1,3 +1,3 @@
 # Asteroids
 
-Using NASA API to display asteroids that are close to earth.
+Using NASA API to display details about asteroids that are close to earth.
