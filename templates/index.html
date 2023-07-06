@@ -1,15 +1,72 @@
 {% extends 'base.html' %}
 
 {% block title %}Home{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-pFw+BNvhhvBC9s4F0hK58ib6nfl/PL1heXOzzGLjwupgG2y/cO/jBFTsuL5Z5kPh8EswAgQAGzjXhA8Fn1XuVQ=="
+    crossorigin="anonymous" />
+
 
 {% block content %}
 
-<h1>Asteroids</h1>
-<p>A place to see near earth asteroids</p>
+<div class="d-flex justify-content-center align-items-center" style="height: 75vh;">
+    <div class="container text-center custom-rounded bg-light p-4" style="background-color: #e3f2fd;">
+        <h1 class="display-4">Asteroids</h1>
+        <p class="lead">A place to get insights on near-earth asteroids</p>
 
-<form action="/" method="GET">
-    <input type="submit" value="getAsteroid" name="getAsteroid" class="btn btn-primary"/>
+        <form action="/" method="GET">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="start-date" class="d-block">From:</label>
+                        <input type="date" class="form-control bg-light" id="start-date" name="start-date"
+                            value="2023-07-01">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="end-date" class="d-block">To:</label>
+                        <input type="date" class="form-control bg-light" id="end-date" name="end-date"
+                            value="2023-07-05">
+                    </div>
+                </div>
+            </div>
 
-</form>
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-lg">Get Asteroids</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<style>
+    .custom-rounded {
+        border-radius: 30px;
+        background-color: #141e30;
+    }
+
+    .gradient-background {
+        background: linear-gradient(to bottom, #141e30, #243b55);
+    }
+</style>
 
 {% endblock %}
+
+
+<script>
+    // Get the iframe element
+    var iframe = document.getElementById('myIframe');
+
+    // Scroll the iframe to a specific position
+    function scrollIframeTo(position) {
+        iframe.contentWindow.scrollTo(0, position);
+    }
+
+    // Example: Scroll the iframe to 200 pixels from the top
+    scrollIframeTo(200);
+</script>
