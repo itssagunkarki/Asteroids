@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+{% block content %}
+
+
+
+<div class="d-flex justify-content-center align-items-center">
+    <div class="container text-center custom-rounded bg-light p-4" style="background-color: #e3f2fd;">
+        <div class="chart" id="bargraph" style="width: 800px; height: 600px;">
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        
+            <script>
+        
+                var graphs = {{plot | safe}};
+                console.log(graphs);
+                
+        
+                
+                Plotly.plot('bargraph', graphs);
+            </script>
+        </div>
+        <div class="chart" id="bargraph1" style="width: 800px; height: 600px;">
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        
+            <script>
+        
+                var graphs = {{plot | safe}};
+                console.log(graphs);
+                
+        
+                
+                Plotly.plot('bargraph1', graphs);
+            </script>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
