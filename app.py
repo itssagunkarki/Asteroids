@@ -3,6 +3,7 @@ import json
 from flask_caching import Cache
 
 from asteroids.asteroid_data import AsteroidData
+from asteroids.graphs import AsteroidGraph
 
 app = Flask(__name__)
 cache = Cache(app, config={"CACHE_TYPE": "simple"})
@@ -30,19 +31,45 @@ def asteroids():
 
             cached_result = cache.get(f"{start_date}_{end_date}")
             if cached_result:
-                data['asteroid_count'] = cached_result['asteroid_count']
-                data['asteroids'] = cached_result['asteroids']
-                return render_template("asteroids.html", title=f"Asteroids from {start_date} to {end_date}", data=data)
+                data['asteroids_data'] = cached_result['asteroids_data']
+            else:
+                asteroids = AsteroidData(start_date, end_date)
+                data['asteroids_data'] = asteroids.get_data_from_nasa()
+                cache.set(f"{start_date}_{end_date}", data, timeout=3600)  # Cache the result for 1 hour
+            
+            graphs = AsteroidGraph(data['asteroids_data']).get_graph()
 
-            asteroids = AsteroidData(start_date, end_date)
-            data['asteroids'] = asteroids.get_list_all_asteroids()
-            data['asteroid_count'] = asteroids.get_num_asteroids()
+            
 
-            cache.set(f"{start_date}_{end_date}", data, timeout=3600)  # Cache the result for 1 hour
+    return render_template("asteroids.html", title="Asteroids", graphs=graphs)
 
-            return render_template("asteroids.html", title=f"Asteroids from {start_date} to {end_date}", data=data)
 
-    return render_template("asteroids.html", title="Asteroids")
+# @app.route("/asteroids/asteroid_table")
+# def asteroid_table():
+#     if request.method == "GET":
+#         if all(key in request.args for key in ["start_date", "end_date"]):
+#             start_date = request.args.get("start_date")
+#             end_date = request.args.get("end_date")
+
+#             data = {
+#                 "start_date": start_date,
+#                 "end_date": end_date
+#             }
+
+#             cached_result = cache.get(f"{start_date}_{end_date}")
+#             if cached_result:
+#                 data['asteroid_count'] = cached_result['asteroid_count']
+#                 data['asteroids'] = cached_result['asteroids']
+#                 return render_template("asteroids.html", title=f"Asteroids from {start_date} to {end_date}", data=data)
+
+#             asteroids = AsteroidData(start_date, end_date)
+#             data['asteroids'] = asteroids.get_list_all_asteroids()
+#             data['asteroid_count'] = asteroids.get_num_asteroids()
+
+#             cache.set(f"{start_date}_{end_date}", data, timeout=3600)  # Cache the result for 1 hour
+
+#             return render_template("asteroid_table.html", title=f"Asteroids from {start_date} to {end_date}", data=data)
+
 
 
 if __name__ == "__main__":
